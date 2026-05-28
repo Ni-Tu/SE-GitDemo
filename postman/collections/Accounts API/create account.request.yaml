@@ -1,0 +1,22 @@
+$kind: http-request
+method: POST
+url: '{{base_url}}/accounts'
+order: 3000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "id": "ACC-2001",
+      "name": "Example Corp",
+      "industry": "Financial Services",
+      "status": "active"
+    }
+event:
+  - listen: test
+    script:
+      exec: |
+        pm.test('Status is 201', () => pm.response.to.have.status(201));
+      language: json

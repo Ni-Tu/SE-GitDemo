@@ -1,0 +1,7 @@
+# Link this folder to your Postman team workspace
+workspace:
+  id: 63e4e847-2f44-4ad4-b215-c6e19ddb6c71
+
+localResources:
+  specs:
+    - ../openapi.yaml
