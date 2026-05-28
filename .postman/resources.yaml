@@ -1,6 +1,10 @@
-# Link this folder to your Postman team workspace
-workspace:
-  id: 63e4e847-2f44-4ad4-b215-c6e19ddb6c71
+# Link this folder to YOUR Postman team workspace (not Sam's demo workspace).
+#
+# On first connect: Postman desktop → Files → Open Folder → this repo → Connect → Local View.
+# Pick your own workspace; Postman will save the workspace id here automatically.
+#
+# Do NOT reuse workspace id 63e4e847-... (Sam's git example) — only one local folder
+# can be linked to a workspace at a time, and that id is used by SamGitDemo.
 
 localResources:
   specs:
