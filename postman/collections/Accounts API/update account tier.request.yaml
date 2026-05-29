@@ -1,13 +1,19 @@
 $kind: http-request
-name: Get account by ID
-method: GET
-url: '{{base_url}}/accounts/:id'
-order: 2000
-pathVariables:
-  - key: id
-    value: '{{accountId}}'
+name: Update account subscription tier
+method: PATCH
+url: '{{base_url}}/accounts/ACC-1001/tier'
+order: 4000
+headers:
+  - key: Content-Type
+    value: application/json
+body:
+  type: json
+  content: |-
+    {
+      "tier": "premium"
+    }
 responses:
-  - name: Account found
+  - name: Tier updated; returns full account
     statusCode: 200
     body:
       content: |-
@@ -23,10 +29,8 @@ event:
     script:
       exec: |
         pm.test('Status is 200', () => pm.response.to.have.status(200));
-        pm.test('Has account id', () => {
-          pm.expect(pm.response.json().id).to.eql(pm.variables.get('accountId'));
-        });
-        pm.test('Account has tier', () => {
+        pm.test('Updated account has tier', () => {
           pm.expect(pm.response.json()).to.have.property('tier');
+          pm.expect(pm.response.json().tier).to.eql('premium');
         });
       language: json

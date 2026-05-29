@@ -1,7 +1,32 @@
 $kind: http-request
+name: List accounts
 method: GET
 url: '{{base_url}}/accounts'
 order: 1000
+responses:
+  - name: Account list
+    statusCode: 200
+    body:
+      content: |-
+        {
+          "count": 2,
+          "data": [
+            {
+              "id": "ACC-1001",
+              "name": "Northwind Traders",
+              "industry": "Retail",
+              "status": "active",
+              "tier": "premium"
+            },
+            {
+              "id": "ACC-1002",
+              "name": "Contoso Manufacturing",
+              "industry": "Manufacturing",
+              "status": "inactive",
+              "tier": "standard"
+            }
+          ]
+        }
 event:
   - listen: test
     script:
@@ -10,5 +35,11 @@ event:
         pm.test('Returns account list', () => {
           const json = pm.response.json();
           pm.expect(json.data).to.be.an('array');
+        });
+        pm.test('Each account has tier', () => {
+          const json = pm.response.json();
+          json.data.forEach((account) => {
+            pm.expect(account).to.have.property('tier');
+          });
         });
       language: json

@@ -1,4 +1,5 @@
 $kind: http-request
+name: Create account
 method: POST
 url: '{{base_url}}/accounts'
 order: 3000
@@ -12,11 +13,27 @@ body:
       "id": "ACC-2001",
       "name": "Example Corp",
       "industry": "Financial Services",
-      "status": "active"
+      "status": "active",
+      "tier": "premium"
     }
+responses:
+  - name: Created
+    statusCode: 201
+    body:
+      content: |-
+        {
+          "id": "ACC-2001",
+          "name": "Example Corp",
+          "industry": "Financial Services",
+          "status": "active",
+          "tier": "premium"
+        }
 event:
   - listen: test
     script:
       exec: |
         pm.test('Status is 201', () => pm.response.to.have.status(201));
+        pm.test('Created account has tier', () => {
+          pm.expect(pm.response.json()).to.have.property('tier');
+        });
       language: json
